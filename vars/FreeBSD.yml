@@ -1,0 +1,9 @@
+---
+rclone_dist: freebsd
+group: wheel
+packages:
+  - unzip
+conflicting_packages:
+  - rclone
+
+install_manpages: false

@@ -1,0 +1,11 @@
+---
+rclone_dist: linux
+group: root
+packages:
+  - unzip
+  - man-db
+
+man_pages:
+  owner: root
+  group: root
+  path: '/usr/share/man/man1'

@@ -1,0 +1,28 @@
+#!{{ ansible_python['executable'] }}
+# -*- coding: utf-8 -*-
+
+# Copyright (C) 2022 buengese
+# SPDX-License-Identifier: MIT
+
+# {{ ansible_managed }}
+
+from __future__ import print_function
+from json import dumps
+import os
+import subprocess
+
+def cmd_exists(cmd):
+    return any(
+        os.access(os.path.join(path, cmd), os.X_OK)
+        for path in os.environ["PATH"].split(os.pathsep)
+    )
+
+output = {'configured': True,
+          'installed': cmd_exists('rclone')}
+
+if output['installed']:
+    output['installed_version'] = subprocess.check_output(
+        ['rclone', 'version'], stderr=subprocess.STDOUT
+    ).decode('utf-8').replace('\n', ' ').split(' ')[1].lstrip('v')
+
+print(dumps(output, sort_keys=True, indent=4))

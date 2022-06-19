@@ -1,0 +1,80 @@
+---
+- name: Update apt cache
+  ansible.builtin.apt:
+    cache_valid_time: 3600
+    update_cache: true
+  register: _pre_update_apt_cache
+  until: _pre_update_apt_cache is succeeded
+  when:
+    - ansible_pkg_mgr == "apt"
+
+- name: Install required packages
+  ansible.builtin.package:
+    name: '{{ item }}'
+    state: present
+  with_items: '{{ packages }}'
+
+- name: Remove conflicting packages
+  ansible.builtin.package:
+    name: '{{ item }}'
+    state: absent
+  with_items: '{{ conflicting_packages }}'
+
+- name: Remove temporary working directory
+  ansible.builtin.file:
+    path: "{{ rclone_setup_tmp_dir }}"
+    state: absent
+
+- name: Create temporary working directory
+  ansible.builtin.file:
+    path: "{{ rclone_setup_tmp_dir }}"
+    state: directory
+    mode: '0775'
+
+- name: Do beta install
+  include_tasks: beta.yml
+  when: rclone_release == 'beta'
+
+- name: Do stable install
+  include_tasks: stable.yml
+  when: rclone_release == 'stable'
+
+- name: Get list of files extracted from the rclone archive
+  ansible.builtin.find:
+    path: "{{ rclone_setup_tmp_dir }}"
+    depth: 2
+    file_type: directory
+  register: rclone_archive
+
+- name: Copy rclone binary
+  ansible.builtin.copy:
+    src: "{{ rclone_setup_tmp_dir }}/rclone-v{{ rclone_version }}-{{ rclone_dist }}-{{ rclone_arch }}/rclone"
+    dest: "/usr/local/bin/rclone"
+    mode: '0755'
+    owner: root
+    group: "{{ group }}"
+    remote_src: true
+
+- name: Make dir for local manpages
+  ansible.builtin.file:
+    path: '{{ man_pages.path }}'
+    state: directory
+    mode: '0775'
+    owner: '{{ man_pages.owner }}'
+    group: '{{ man_pages.group }}'
+  when: install_manpages
+
+- name: Copy rclone manpage
+  ansible.builtin.copy:
+    src: "{{ rclone_setup_tmp_dir }}/rclone-v{{ rclone_version }}-{{ rclone_dist }}-{{ rclone_arch }}/rclone.1"
+    dest: "{{ man_pages.path }}/rclone.1"
+    mode: '0644'
+    owner: root
+    group: "{{ group }}"
+    remote_src: true
+  when: install_manpages
+
+- name: Update mandb
+  ansible.builtin.command: mandb
+  changed_when: false
+  when: install_manpages
