@@ -1,11 +1,11 @@
 ---
 - name: Gather OS specific variables
-  ansible.builtin.include_vars: "{{ item }}"
+  ansible.builtin.include_vars: '{{ item }}'
   with_first_found:
     - '{{ ansible_distribution_release }}.yml'
-    - "{{ ansible_distribution }}.yml"
+    - '{{ ansible_distribution }}.yml'
     - '{{ ansible_os_family }}.yml'
-    - 'default.yml'
+    - default.yml
   tags:
     - vars
 
@@ -16,19 +16,18 @@
   include_tasks: install-bin.yml
   when:
     - ansible_os_family != "Archlinux"
-    - (((not ansible_local.rclone.installed|d())|bool) or (ansible_local.rclone.installed_version|d("0.0.0")) != rclone_version)
-  become: true
-
+    - >-
+      (((not ansible_local.rclone.installed|d())|bool) or
+      (ansible_local.rclone.installed_version|d("0.0.0")) != rclone_version)
 
 - name: Install from package
   include_tasks: install-package.yml
   when:
     - ansible_os_family == "Archlinux"
-  become: true
 
 - name: Merge configs
   ansible.builtin.set_fact:
-    rclone_configs: "{{ rclone_configs + rclone_configs_extra }}"
+    rclone_configs: '{{ rclone_configs + rclone_configs_extra }}'
   when: rclone_configs is defined and rclone_configs_extra is defined
 
 - name: Install configs
@@ -43,7 +42,7 @@
       ansible.builtin.template:
         src: rclone.conf.j2
         dest: '{{ rclone_config_location }}'
-        mode: 0600
+        mode: 384
   become: true
   when: rclone_configs is defined
 

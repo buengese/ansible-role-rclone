@@ -1,21 +1,21 @@
 ---
 - block:
-  - name: update pacman package lists
-    community.general.pacman:
-      update_cache: true
-    changed_when: false
-    register: _pre_update_pacman_cache
-    until: _pre_update_pacman_cache is succeeded
-    when:
-      - ansible_pkg_mgr == 'pacman'
+    - name: update pacman package lists
+      community.general.pacman:
+        update_cache: true
+      changed_when: false
+      register: _pre_update_pacman_cache
+      until: _pre_update_pacman_cache is succeeded
+      when:
+        - ansible_pkg_mgr == 'pacman'
 
-  - name: Remove conflicting packages
-    ansible.builtin.package:
-      name: rclone-git
-      state: absent
+    - name: Remove conflicting packages
+      ansible.builtin.package:
+        name: rclone-git
+        state: absent
 
-  - name: Install rclone package
-    ansible.builtin.package:
-      name: rclone
-      state: present
+    - name: Install rclone package
+      ansible.builtin.package:
+        name: rclone
+        state: present
   become: true
