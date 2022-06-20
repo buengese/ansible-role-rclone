@@ -1,0 +1,33 @@
+---
+galaxy_info:
+  role_name: rclone
+  author: buengese
+  description: Ansible Role - rclone
+  min_ansible_version: "2.10"
+  license: MIT
+  galaxy_tags:
+    - rsync
+    - rclone
+    - system
+    - cloud
+    - storage
+    - sync
+  platforms:
+    - name: Debian
+      versions:
+        - buster
+        - bullseye
+    - name: Ubuntu
+      versions:
+        - focal
+    - name: Fedora
+      versions:
+        - '35'
+    - name: ArchLinux
+      versions:
+        - "all"
+    - name: FreeBSD
+      versions:
+        - "12.0"
+        - "12.1"
+        - "12.2"
