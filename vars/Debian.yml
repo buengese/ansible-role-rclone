@@ -1,10 +1,12 @@
 ---
+rclone_dist: linux
 packages:
   - unzip
   - man-db
 conflicting_packages:
   - rclone
 
+group: root
 man_pages:
   owner: root
   group: root

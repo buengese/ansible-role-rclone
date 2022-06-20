@@ -1,4 +1,5 @@
 ---
+rclone_dist: linux
 packages:
   - unzip
   - man
@@ -6,6 +7,7 @@ packages:
 conflicting_packages:
   - rclone
 
+group: root
 man_pages:
   owner: root
   group: root
