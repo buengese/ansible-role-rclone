@@ -1,6 +1,6 @@
 ---
 command:
-  restic-version:
+  rclone-version:
     exit-status: 0
     exec: "rclone version"
     stdout:
