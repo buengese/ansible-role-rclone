@@ -14,12 +14,6 @@ The following variables determine the install and update behaviour of this role.
 * `rclone_config_location`: The location to install the config file if configured (Default: `/root/.config/rclone/rclone.conf`)
 
 
-
-### Optional Variables
-
-This role also defines variables for most of the gitea configuration see [defaults/main.yml](defaults/main.yml) for a full list. The function of these variables is explained in the gitea [config cheat-sheet](https://docs.gitea.io/en-us/config-cheat-sheet/).
-
-
 Supported OS
 ------------
 - Ubuntu 20.04
