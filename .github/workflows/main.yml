@@ -14,22 +14,22 @@ jobs:
     strategy:
       matrix:
         distro:
+          - debian12
           - debian11
-          - debian10
-          - ubuntu2004
-          - fedora35
+          - ubuntu2204
+          - fedora39
 
     steps:
       - name: Check out the codebase.
-        uses: actions/checkout@v2.4.0
+        uses: actions/checkout@v3
 
       - name: Set up Python 3.
-        uses: actions/setup-python@v2.3.2
+        uses: actions/setup-python@v4
         with:
           python-version: '3.x'
 
       - name: Install test dependencies.
-        run: pip3 install ansible-lint molecule[docker]==3.6.1 molecule-goss yamllint
+        run: pip3 install ansible-lint molecule molecule-plugins[docker] yamllint
 
       - name: Run Molecule tests.
         run: molecule test -s default
