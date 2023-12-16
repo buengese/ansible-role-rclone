@@ -18,6 +18,7 @@ jobs:
           - debian11
           - ubuntu2204
           - fedora39
+          - rockylinux9
 
     steps:
       - name: Check out the codebase.
