@@ -19,4 +19,4 @@ provisioner:
     converge: converge.yml
     verify: verify.yml
 verifier:
-  name: goss
+  name: ansible
