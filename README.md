@@ -1,34 +1,48 @@
-ansible-role-rclone
-===================
-This role installs and configures [rclone](https://rclone.org) the Swiss army knife of cloud storage. This role will download place the binary for Debian, Ubuntu, RedHat, Fedora and FreeBSD and use the package manger on ArchLinux.
+# Ansible Role: Rclone
 
+This Ansible role streamlines the installation and setup of [rclone](https://rclone.org), a powerful tool for cloud storage management. It is designed for automated deployment across various Linux distributions and FreeBSD, handling binary installations for Debian, Ubuntu, RedHat, Fedora, and FreeBSD, as well as package management for ArchLinux.
 
-Role Variables
---------------
+## Role Variables
 
-The following variables determine the install and update behaviour of this role.
+### Core Variables
+Key variables for the role’s operation include:
 
-* `rclone_release`: The version of rclone to install. Either `stable` for latest release version or `beta` for the latest beta version. (Default: `stable`)
-* `rclone_arch`: The architecture to use. (e.g `arm`, `mips`, `386` etc) (Default: `amd64`)
-* `install_manpages`: Decides wheter manpages should be installed (Default: `true`)
-* `rclone_config_location`: The location to install the config file if configured (Default: `/root/.config/rclone/rclone.conf`)
+- `rclone_arch`: Specifies the architecture for the rclone binary (options like `amd64`, `arm`, `mips`, `386`). See all supported architectures at [rclone releases](https://github.com/ncw/rclone/releases). Default: `amd64`.
+- `rclone_release`: Sets the release version of rclone, either `stable` or `beta`. Default: `stable`.
+- `rclone_version`: The exact version of rclone to be installed. If unspecified, defaults to the latest version.
+- `install_manpages`: Indicates whether to install rclone manpages. Default: `true`.
+- `rclone_setup_tmp_dir`: The temporary directory for setup processes. Default: `/tmp/rclone_setup`.
+- `rclone_config_location`: The designated path for the rclone configuration file. Default: `/root/.config/rclone/rclone.conf`.
 
+### Configuration Variables
+The `rclone_configs` variable enables you to define remote configurations for rclone. Here's an illustrative example:
 
+```yaml
+rclone_configs: [
+    {
+        "name": "GoogleDrive",
+        "properties": {
+            "type": "drive",
+            "client_id": "your_client_id",
+            "client_secret": "your_client_secret",
+            "scope": "drive",
+            "token": "your_token"
+        }
+    }
+]
+```
 
-### Optional Variables
+This section is optional. While it offers convenient configuration for certain remote types, it's generally not recommended for most remotes, as rclone may require direct access to the config file for token updates.
 
-This role also defines variables for most of the gitea configuration see [defaults/main.yml](defaults/main.yml) for a full list. The function of these variables is explained in the gitea [config cheat-sheet](https://docs.gitea.io/en-us/config-cheat-sheet/).
+## Supported Operating Systems
 
+- Ubuntu 20.04, 22.04
+- Debian 10, 11, 12
+- Fedora 39
+- ArchLinux
+- FreeBSD
+- Rocky Linux 9
 
-Supported OS
-------------
-- Ubuntu 20.04
-- Debian 10
-- Debian 11
-- Fedora 35
+## License
 
-
-License
--------
-
-BSD-3-Clause
+MIT

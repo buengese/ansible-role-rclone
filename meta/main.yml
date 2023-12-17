@@ -2,27 +2,28 @@
 galaxy_info:
   role_name: rclone
   author: buengese
-  description: Ansible Role - rclone
+  description: This role installs and configures rclone, a versatile tool for managing cloud storage across various platforms.
   min_ansible_version: "2.10"
   license: MIT
   galaxy_tags:
-    - rsync
     - rclone
-    - system
-    - cloud
-    - storage
-    - sync
+    - cloud_storage
+    - file_sync
+    - cloud_management
+    - data_backup
   platforms:
-    - name: Debian
-      versions:
-        - buster
-        - bullseye
     - name: Ubuntu
       versions:
-        - focal
+        - focal    # Ubuntu 20.04
+        - jammy    # Ubuntu 22.04
+    - name: Debian
+      versions:
+        - buster   # Debian 10
+        - bullseye # Debian 11
+        - bookworm # Debian 12
     - name: Fedora
       versions:
-        - '35'
+        - '39'
     - name: ArchLinux
       versions:
         - "all"
@@ -31,3 +32,11 @@ galaxy_info:
         - "12.0"
         - "12.1"
         - "12.2"
+        - "13.0"
+    - name: Rocky
+      versions:
+        - "9.0"
+        - "9.1"
+        - "9.2"
+
+dependencies: []
