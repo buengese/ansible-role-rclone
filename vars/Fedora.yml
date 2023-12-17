@@ -2,7 +2,8 @@
 rclone_dist: linux
 packages:
   - unzip
-  - man-db
+  - man
+  - file
 conflicting_packages:
   - rclone
 
@@ -11,4 +12,4 @@ group: root
 man_pages:
   owner: root
   group: root
-  path: '/usr/share/man/man1'
+  path: '/usr/local/share/man/man1'

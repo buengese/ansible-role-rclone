@@ -51,7 +51,7 @@
         src: >-
           {{ rclone_setup_tmp_dir }}/rclone-v{{ rclone_version }}-{{ rclone_dist
           }}-{{ rclone_arch }}/rclone
-        dest: /usr/local/bin/rclone
+        dest: '{{ bin_path }}/rclone'
         mode: '0755'
         owner: root
         group: '{{ group }}'

@@ -19,6 +19,10 @@
   ansible.builtin.setup:
     filter: ansible_local
 
+- name: Rclone version
+  ansible.builtin.debug:
+    var: ansible_local.rclone
+
 - block:
     - name: Check latest stable rclone version number
       ansible.builtin.uri:

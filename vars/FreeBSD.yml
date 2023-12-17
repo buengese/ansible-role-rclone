@@ -1,9 +1,10 @@
 ---
 rclone_dist: freebsd
-group: wheel
 packages:
   - unzip
 conflicting_packages:
   - rclone
 
+bin_path: /usr/local/bin
+group: wheel
 install_manpages: false

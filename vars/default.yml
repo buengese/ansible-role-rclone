@@ -4,6 +4,7 @@ packages:
   - unzip
   - man-db
 
+bin_path: /usr/bin
 group: root
 man_pages:
   owner: root
